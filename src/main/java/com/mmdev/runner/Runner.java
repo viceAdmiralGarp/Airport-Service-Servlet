@@ -1,13 +1,17 @@
 package com.mmdev.runner;
 
-import com.mmdev.util.ConnectionManagerUtil;
+import com.mmdev.dao.FlightDao;
+import com.mmdev.dao.impl.JdbcFlightDao;
+
 
 import java.sql.SQLException;
 
+import java.util.List;
+
 public class Runner {
 	public static void main(String[] args) throws SQLException {
-		try (var open = ConnectionManagerUtil.open()) {
-			System.out.println(open.getTransactionIsolation());
-		}
+		JdbcFlightDao jdbcFlightDao = new JdbcFlightDao();
+		List<FlightDao> list = jdbcFlightDao.findAll();
+		list.forEach(System.out::println);
 	}
 }
