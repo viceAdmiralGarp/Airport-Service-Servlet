@@ -11,19 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicketDao {
-
-	private static final String FIND_ALL_TICKETS_FROM_FLIGHTS_SQL = """
-			SELECT ticket.id AS ticket_id,
-			passenger_no,
-			passenger_name,
-			flight_id,
-			seat_no,
-			cost
-			FROM ticket
-			JOIN public.flight f ON f.id = ticket.flight_id
-			WHERE flight_id = ?
-			""";
-
 	private static final String FIND_ALL_TICKETS_SQL = """
    			SELECT t.id AS ticket_id,
 			passenger_no,
@@ -51,7 +38,7 @@ public class TicketDao {
 		return tickets;
 	}
 
-	public Ticket buildTicket(ResultSet resultSet) throws SQLException {
+	private Ticket buildTicket(ResultSet resultSet) throws SQLException {
 		return new Ticket(
 				resultSet.getLong("ticket_id"),
 				resultSet.getString("passenger_no"),

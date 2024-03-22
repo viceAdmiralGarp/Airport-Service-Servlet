@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FlightDao implements Dao<Flight> {
-
+	private static final FlightDao INSTANCE = new FlightDao();
 	private static final String FIND_ALL_SQL = """
 							SELECT id,
 							flight_no,
@@ -22,6 +22,9 @@ public class FlightDao implements Dao<Flight> {
 							status
 							FROM flight
 			""";
+
+	private FlightDao() {
+	}
 
 	@Override
 	public List<Flight> findAll() {
@@ -39,7 +42,11 @@ public class FlightDao implements Dao<Flight> {
 		return flights;
 	}
 
-	public Flight buildFlight(ResultSet resultSet) throws SQLException {
+	public static FlightDao getInstance() {
+		return INSTANCE;
+	}
+
+	private Flight buildFlight(ResultSet resultSet) throws SQLException {
 		return new Flight(
 				resultSet.getLong("id"),
 				resultSet.getString("flight_no"),

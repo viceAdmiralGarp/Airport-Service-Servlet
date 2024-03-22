@@ -16,9 +16,9 @@ public class FlightServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
-		FlightDao jdbcFlightsDao = new FlightDao();
+		FlightDao flightDao = FlightDao.getInstance();
 		try (var outputStream = resp.getOutputStream()) {
-			for (Flight flight : jdbcFlightsDao.findAll()) {
+			for (Flight flight : flightDao.findAll()) {
 				outputStream.print("<h1><a href=\"ticket?flightId=" + flight.getId() + "\">" +
 								   flight.getFlightNo() + " || " + flight.getId() + "</a></h1>");
 			}
