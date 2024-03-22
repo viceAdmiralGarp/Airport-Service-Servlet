@@ -1,7 +1,7 @@
 package com.mmdev.servlet;
 
-import com.mmdev.dao.FlightDao;
-import com.mmdev.serivce.JdbcFlightDao;
+import com.mmdev.dao.TicketDao;
+import com.mmdev.serivce.JdbcTicketDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,17 +10,20 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/flight")
-public class FlightServlet extends HttpServlet {
+@WebServlet("/ticket")
+public class TicketServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
-		JdbcFlightDao jdbcFlightsDao = new JdbcFlightDao();
+		String flightId = req.getParameter("flightId");
+		JdbcTicketDao jdbcTicketDao = new JdbcTicketDao();
+		var ticketsDao = jdbcTicketDao.findAllById();
 		try (var outputStream = resp.getOutputStream()) {
-			for (FlightDao flightDao : jdbcFlightsDao.findAll()) {
-				outputStream.print("<h1><a href=\"ticket?flightId=" + flightDao.getId() + "\">" +
-								   flightDao.getFlightNo() + " || " + flightDao.getId() + "</a></h1>");
+			for (TicketDao ticketDao : ticketsDao) {
+				if (Long.parseLong(flightId) == ticketDao.getFlightId()) {
+					outputStream.print("<h1> ID ticket - " + ticketDao.getId()+" passenger no - "+ticketDao.getPassengerNo() + "</h1>");
+				}
 			}
 		}
 	}
