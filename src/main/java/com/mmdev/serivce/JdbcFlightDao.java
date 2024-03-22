@@ -1,4 +1,4 @@
-package com.mmdev.dao.impl;
+package com.mmdev.serivce;
 
 import com.mmdev.dao.Dao;
 import com.mmdev.dao.FlightDao;

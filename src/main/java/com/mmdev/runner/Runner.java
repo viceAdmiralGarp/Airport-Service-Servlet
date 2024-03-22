@@ -1,7 +1,7 @@
 package com.mmdev.runner;
 
 import com.mmdev.dao.FlightDao;
-import com.mmdev.dao.impl.JdbcFlightDao;
+import com.mmdev.serivce.JdbcFlightDao;
 
 
 import java.sql.SQLException;
