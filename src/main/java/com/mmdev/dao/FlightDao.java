@@ -1,138 +1,54 @@
 package com.mmdev.dao;
 
-import java.sql.Timestamp;
-import java.util.Objects;
+import com.mmdev.entity.Flight;
+import com.mmdev.exception.DaoException;
+import com.mmdev.util.ConnectionManagerUtil;
 
-public class FlightDao {
-	private Long id;
-	private String flightNo;
-	private Timestamp departureDate;
-	private String departureAirportCode;
-	private Timestamp arrivalDate;
-	private String arrivalAirportCode;
-	private Integer aircraftId;
-	private String Status;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-	public FlightDao(Long id,
-					 String flightNo,
-					 Timestamp departureDate,
-					 String departureAirportCode,
-					 Timestamp arrivalDate,
-					 String arrivalAirportCode,
-					 Integer aircraftId,
-					 String status) {
-		this.id = id;
-		this.flightNo = flightNo;
-		this.departureDate = departureDate;
-		this.departureAirportCode = departureAirportCode;
-		this.arrivalDate = arrivalDate;
-		this.arrivalAirportCode = arrivalAirportCode;
-		this.aircraftId = aircraftId;
-		Status = status;
-	}
+public class FlightDao implements Dao<Flight> {
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getFlightNo() {
-		return flightNo;
-	}
-
-	public void setFlightNo(String flightNo) {
-		this.flightNo = flightNo;
-	}
-
-	public Timestamp getDepartureDate() {
-		return departureDate;
-	}
-
-	public void setDepartureDate(Timestamp departureDate) {
-		this.departureDate = departureDate;
-	}
-
-	public String getDepartureAirportCode() {
-		return departureAirportCode;
-	}
-
-	public void setDepartureAirportCode(String departureAirportCode) {
-		this.departureAirportCode = departureAirportCode;
-	}
-
-	public Timestamp getArrivalDate() {
-		return arrivalDate;
-	}
-
-	public void setArrivalDate(Timestamp arrivalDate) {
-		this.arrivalDate = arrivalDate;
-	}
-
-	public String getArrivalAirportCode() {
-		return arrivalAirportCode;
-	}
-
-	public void setArrivalAirportCode(String arrivalAirportCode) {
-		this.arrivalAirportCode = arrivalAirportCode;
-	}
-
-	public Integer getAircraftId() {
-		return aircraftId;
-	}
-
-	public void setAircraftId(Integer aircraftId) {
-		this.aircraftId = aircraftId;
-	}
-
-	public String getStatus() {
-		return Status;
-	}
-
-	public void setStatus(String status) {
-		Status = status;
-	}
+	private static final String FIND_ALL_SQL = """
+							SELECT id,
+							flight_no,
+							departure_date,
+							departure_airport_code,
+							arrival_date,
+							arrival_airport_code,
+							aircraft_id,
+							status
+							FROM flight
+			""";
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		FlightDao flightDao = (FlightDao) o;
-		return Objects.equals(id, flightDao.id)
-			   && Objects.equals(flightNo, flightDao.flightNo)
-			   && Objects.equals(departureDate, flightDao.departureDate)
-			   && Objects.equals(departureAirportCode, flightDao.departureAirportCode)
-			   && Objects.equals(arrivalDate, flightDao.arrivalDate)
-			   && Objects.equals(arrivalAirportCode, flightDao.arrivalAirportCode)
-			   && Objects.equals(aircraftId, flightDao.aircraftId)
-			   && Objects.equals(Status, flightDao.Status);
+	public List<Flight> findAll() {
+		List<Flight> flights = new ArrayList<>();
+		try (var open = ConnectionManagerUtil.open()) {
+			var preparedStatement = open.prepareStatement(FIND_ALL_SQL);
+			var resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Flight flight = buildFlight(resultSet);
+				flights.add(flight);
+			}
+		} catch (SQLException e) {
+			throw new DaoException("Error while executing SQL query (Flight)", e);
+		}
+		return flights;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id,
-				flightNo,
-				departureDate,
-				departureAirportCode,
-				arrivalDate,
-				arrivalAirportCode,
-				aircraftId,
-				Status);
-	}
-
-	@Override
-	public String toString() {
-		return "FlightDao{" +
-			   "id=" + id +
-			   ", flightNo='" + flightNo + '\'' +
-			   ", departureDate=" + departureDate +
-			   ", departureAirportCode='" + departureAirportCode + '\'' +
-			   ", arrivalDate=" + arrivalDate +
-			   ", arrivalAirportCode='" + arrivalAirportCode + '\'' +
-			   ", aircraftId=" + aircraftId +
-			   ", Status='" + Status + '\'' +
-			   '}';
+	public Flight buildFlight(ResultSet resultSet) throws SQLException {
+		return new Flight(
+				resultSet.getLong("id"),
+				resultSet.getString("flight_no"),
+				resultSet.getTimestamp("departure_date"),
+				resultSet.getString("departure_airport_code"),
+				resultSet.getTimestamp("arrival_date"),
+				resultSet.getString("arrival_airport_code"),
+				resultSet.getInt("aircraft_id"),
+				resultSet.getString("status")
+		);
 	}
 }

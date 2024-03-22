@@ -1,7 +1,7 @@
 package com.mmdev.servlet;
 
+import com.mmdev.entity.Flight;
 import com.mmdev.dao.FlightDao;
-import com.mmdev.serivce.JdbcFlightDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,11 +16,11 @@ public class FlightServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
-		JdbcFlightDao jdbcFlightsDao = new JdbcFlightDao();
+		FlightDao jdbcFlightsDao = new FlightDao();
 		try (var outputStream = resp.getOutputStream()) {
-			for (FlightDao flightDao : jdbcFlightsDao.findAll()) {
-				outputStream.print("<h1><a href=\"ticket?flightId=" + flightDao.getId() + "\">" +
-								   flightDao.getFlightNo() + " || " + flightDao.getId() + "</a></h1>");
+			for (Flight flight : jdbcFlightsDao.findAll()) {
+				outputStream.print("<h1><a href=\"ticket?flightId=" + flight.getId() + "\">" +
+								   flight.getFlightNo() + " || " + flight.getId() + "</a></h1>");
 			}
 		}
 	}

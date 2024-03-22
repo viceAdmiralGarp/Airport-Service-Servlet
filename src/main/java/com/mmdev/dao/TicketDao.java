@@ -1,99 +1,64 @@
 package com.mmdev.dao;
 
-import java.util.Objects;
+
+import com.mmdev.entity.Ticket;
+import com.mmdev.exception.DaoException;
+import com.mmdev.util.ConnectionManagerUtil;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TicketDao {
-	private Long id;
-	private String passengerNo;
-	private String passengerName;
-	private Long flightId;
-	private String seatNo;
-	private Long Cost;
 
-	public TicketDao(Long id, String passengerNo, String passengerName, Long flightId, String seatNo, Long cost) {
-		this.id = id;
-		this.passengerNo = passengerNo;
-		this.passengerName = passengerName;
-		this.flightId = flightId;
-		this.seatNo = seatNo;
-		Cost = cost;
+	private static final String FIND_ALL_TICKETS_FROM_FLIGHTS_SQL = """
+			SELECT ticket.id AS ticket_id,
+			passenger_no,
+			passenger_name,
+			flight_id,
+			seat_no,
+			cost
+			FROM ticket
+			JOIN public.flight f ON f.id = ticket.flight_id
+			WHERE flight_id = ?
+			""";
+
+	private static final String FIND_ALL_TICKETS_SQL = """
+   			SELECT t.id AS ticket_id,
+			passenger_no,
+			passenger_name,
+			flight_id,
+			seat_no,
+			cost 
+			FROM flight JOIN public.ticket t on flight.id = t.flight_id
+			""";
+
+
+	public List<Ticket> findAllById() {
+		List<Ticket> tickets = new ArrayList<>();
+		try (var open = ConnectionManagerUtil.open();
+			 var prepareStatement = open.prepareStatement(FIND_ALL_TICKETS_SQL)) {
+//			prepareStatement.setLong(1, id);
+			var resultSet = prepareStatement.executeQuery();
+			while (resultSet.next()) {
+				Ticket ticket = buildTicket(resultSet);
+				tickets.add(ticket);
+			}
+		} catch (SQLException e) {
+			throw new DaoException("Error while executing SQL query (Ticket)", e);
+		}
+		return tickets;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getPassengerNo() {
-		return passengerNo;
-	}
-
-	public void setPassengerNo(String passengerNo) {
-		this.passengerNo = passengerNo;
-	}
-
-	public String getPassengerName() {
-		return passengerName;
-	}
-
-	public void setPassengerName(String passengerName) {
-		this.passengerName = passengerName;
-	}
-
-	public Long getFlightId() {
-		return flightId;
-	}
-
-	public void setFlightId(Long flightId) {
-		this.flightId = flightId;
-	}
-
-	public String getSeatNo() {
-		return seatNo;
-	}
-
-	public void setSeatNo(String seatNo) {
-		this.seatNo = seatNo;
-	}
-
-	public Long getCost() {
-		return Cost;
-	}
-
-	public void setCost(Long cost) {
-		Cost = cost;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		TicketDao ticketDao = (TicketDao) o;
-		return Objects.equals(id, ticketDao.id)
-			   && Objects.equals(passengerNo, ticketDao.passengerNo)
-			   && Objects.equals(passengerName, ticketDao.passengerName)
-			   && Objects.equals(flightId, ticketDao.flightId)
-			   && Objects.equals(seatNo, ticketDao.seatNo)
-			   && Objects.equals(Cost, ticketDao.Cost);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, passengerNo, passengerName, flightId, seatNo, Cost);
-	}
-
-	@Override
-	public String toString() {
-		return "TicketDao{" +
-			   "id=" + id +
-			   ", passengerNo='" + passengerNo + '\'' +
-			   ", passengerName='" + passengerName + '\'' +
-			   ", flightId=" + flightId +
-			   ", seatNo='" + seatNo + '\'' +
-			   ", Cost=" + Cost +
-			   '}';
+	public Ticket buildTicket(ResultSet resultSet) throws SQLException {
+		return new Ticket(
+				resultSet.getLong("ticket_id"),
+				resultSet.getString("passenger_no"),
+				resultSet.getString("passenger_name"),
+				resultSet.getLong("flight_id"),
+				resultSet.getString("seat_no"),
+				resultSet.getLong("cost")
+		);
 	}
 }

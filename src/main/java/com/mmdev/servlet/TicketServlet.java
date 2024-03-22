@@ -1,7 +1,7 @@
 package com.mmdev.servlet;
 
+import com.mmdev.entity.Ticket;
 import com.mmdev.dao.TicketDao;
-import com.mmdev.serivce.JdbcTicketDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,12 +17,13 @@ public class TicketServlet extends HttpServlet {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
 		String flightId = req.getParameter("flightId");
-		JdbcTicketDao jdbcTicketDao = new JdbcTicketDao();
-		var ticketsDao = jdbcTicketDao.findAllById();
+		TicketDao ticketDao = new TicketDao();
+		var ticketsDao = ticketDao.findAllById();
 		try (var outputStream = resp.getOutputStream()) {
-			for (TicketDao ticketDao : ticketsDao) {
-				if (Long.parseLong(flightId) == ticketDao.getFlightId()) {
-					outputStream.print("<h1> ID ticket - " + ticketDao.getId()+" passenger no - "+ticketDao.getPassengerNo() + "</h1>");
+			for (Ticket ticket : ticketsDao) {
+				if (Long.parseLong(flightId) == ticket.getFlightId()) {
+					outputStream.print("<h1> ID ticket - " + ticket.getId() +
+									   " passenger no - " + ticket.getPassengerNo() + "</h1>");
 				}
 			}
 		}
