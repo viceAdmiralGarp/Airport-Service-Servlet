@@ -32,13 +32,12 @@ public class JdbcFlightDao implements Dao<FlightDao> {
 		try (var open = ConnectionManagerUtil.open()) {
 			var preparedStatement = open.prepareStatement(FIND_ALL_SQL);
 			var resultSet = preparedStatement.executeQuery();
-			FlightDao flightDao;
 			while (resultSet.next()) {
-				flightDao = buildFlight(resultSet);
+				FlightDao flightDao = buildFlight(resultSet);
 				flights.add(flightDao);
 			}
 		} catch (SQLException e) {
-			throw new DaoException();
+			throw new DaoException("Error while executing SQL query (Flight)", e);
 		}
 		return flights;
 	}
