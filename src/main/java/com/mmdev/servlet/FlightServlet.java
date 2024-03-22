@@ -1,7 +1,7 @@
 package com.mmdev.servlet;
 
-import com.mmdev.entity.Flight;
-import com.mmdev.dao.FlightDao;
+
+import com.mmdev.serivce.FlightService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,12 +16,18 @@ public class FlightServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
-		FlightDao flightDao = FlightDao.getInstance();
+		FlightService flightService = FlightService.getInstance();
 		try (var outputStream = resp.getOutputStream()) {
-			for (Flight flight : flightDao.findAll()) {
-				outputStream.print("<h1><a href=\"ticket?flightId=" + flight.getId() + "\">" +
-								   flight.getFlightNo() + " || " + flight.getId() + "</a></h1>");
-			}
+			flightService.findAll().forEach(flightDto ->
+					{
+						try {
+							outputStream.print("<h1><a href=\"ticket?flightId=" + flightDto.getId() + "\">" +
+											   flightDto.getDescription() + "</a></h1>");
+						} catch (IOException e) {
+							throw new RuntimeException(e);
+						}
+					}
+			);
 		}
 	}
 }

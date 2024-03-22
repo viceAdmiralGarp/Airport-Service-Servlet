@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.toList;
 
 public class FlightService {
 
-	private final FlightService INSTANCE = new FlightService();
+	private static final FlightService INSTANCE = new FlightService();
 	private final FlightDao flightDao = FlightDao.getInstance();
 
 	private FlightService() {
@@ -21,7 +21,7 @@ public class FlightService {
 				.map(flight -> new FlightDto(
 						flight.getId(),
 						"""
-							% - % - %
+							%s - %s - %s
 						""".formatted(
 								flight.getDepartureAirportCode(),
 								flight.getArrivalAirportCode(),
@@ -29,7 +29,7 @@ public class FlightService {
 						.collect(toList());
 	}
 
-	public FlightService getInstance() {
+	public static FlightService getInstance() {
 		return INSTANCE;
 	}
 }
