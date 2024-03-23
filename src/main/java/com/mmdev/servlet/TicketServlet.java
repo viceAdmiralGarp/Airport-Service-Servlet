@@ -1,7 +1,6 @@
 package com.mmdev.servlet;
 
-import com.mmdev.entity.Ticket;
-import com.mmdev.dao.TicketDao;
+import com.mmdev.serivce.TicketService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,15 +16,10 @@ public class TicketServlet extends HttpServlet {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
 		String flightId = req.getParameter("flightId");
-		TicketDao ticketDao = TicketDao.getInstance();
-		var ticketsDao = ticketDao.findAll();
-		try (var outputStream = resp.getOutputStream()) {
-			for (Ticket ticket : ticketsDao) {
-				if (Long.parseLong(flightId) == ticket.getFlightId()) {
-					outputStream.print("<h1> ID ticket - " + ticket.getId() +
-									   " passenger no - " + ticket.getPassengerNo() + "</h1>");
-				}
-			}
+		TicketService ticketService = TicketService.getInstance();
+		try (var writer = resp.getWriter()) {
+			ticketService.findAllFlightsById(Long.parseLong(flightId))
+					.forEach(ticketDto -> writer.write("<h1>" + ticketDto.getDescription() + "</h1>"));
 		}
 	}
 }

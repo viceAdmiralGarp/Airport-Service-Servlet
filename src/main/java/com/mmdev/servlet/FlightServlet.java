@@ -18,11 +18,9 @@ public class FlightServlet extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		FlightService flightService = FlightService.getInstance();
 		try (var writer = resp.getWriter()) {
-			flightService.findAll().forEach(flightDto -> {
-						writer.write("<h1><a href=\"ticket?flightId="
-									 + flightDto.getId()
-									 + flightDto.getDescription() + "</a></h1>");
-					}
+			flightService.findAll().forEach(flightDto -> writer.write("<h1><a href=\"ticket?flightId="
+																	  + flightDto.getId() + "\">"
+																	  + flightDto.getDescription() + "</a></h1>")
 			);
 		}
 	}

@@ -14,7 +14,7 @@ public class TicketDao {
 
 	public static final TicketDao INSTANCE = new TicketDao();
 	private static final String FIND_ALL_TICKETS_SQL = """
-   			SELECT t.id AS ticket_id,
+						SELECT t.id AS ticket_id,
 			passenger_no,
 			passenger_name,
 			flight_id,
@@ -26,14 +26,16 @@ public class TicketDao {
 	private TicketDao() {
 	}
 
-	public List<Ticket> findAll() {
+	public List<Ticket> findAllFlightsById(Long id) {
 		List<Ticket> tickets = new ArrayList<>();
 		try (var open = ConnectionManagerUtil.open();
 			 var prepareStatement = open.prepareStatement(FIND_ALL_TICKETS_SQL)) {
 			var resultSet = prepareStatement.executeQuery();
 			while (resultSet.next()) {
 				Ticket ticket = buildTicket(resultSet);
-				tickets.add(ticket);
+				if (id.equals(ticket.getFlightId())) {
+					tickets.add(ticket);
+				}
 			}
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (Ticket)", e);
