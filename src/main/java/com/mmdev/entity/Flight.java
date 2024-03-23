@@ -1,10 +1,11 @@
 package com.mmdev.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import java.sql.Timestamp;
 
 @Data
+@AllArgsConstructor
 public class Flight {
 	private Long id;
 	private String flightNo;

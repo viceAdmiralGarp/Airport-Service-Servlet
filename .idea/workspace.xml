@@ -12,8 +12,7 @@
     <list default="true" id="6b1d471c-2086-4cec-88fc-8c4edf970104" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/dto/FlightDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/dto/FlightDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/dto/TicketDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/dto/TicketDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/entity/Flight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/entity/Flight.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -221,12 +220,23 @@
       <workItem from="1711051607261" duration="6945000" />
       <workItem from="1711101820855" duration="13103000" />
       <workItem from="1711131557916" duration="6532000" />
-      <workItem from="1711214327589" duration="5386000" />
+      <workItem from="1711214327589" duration="6575000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
