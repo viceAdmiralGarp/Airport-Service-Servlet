@@ -4,7 +4,6 @@ import com.mmdev.dao.FlightDao;
 import com.mmdev.dto.FlightDto;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 

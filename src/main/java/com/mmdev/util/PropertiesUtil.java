@@ -1,18 +1,17 @@
 package com.mmdev.util;
 
+import lombok.experimental.UtilityClass;
+
 import java.io.IOException;
 import java.util.Properties;
 
-public final class PropertiesUtil {
+@UtilityClass
+public  class PropertiesUtil {
 	private static final Properties PROPERTIES = new Properties();
 
 	static {
 		loadProcessor();
 	}
-
-	private PropertiesUtil() {
-	}
-
 	public static String get(String key) {
 		return PROPERTIES.getProperty(key);
 	}
