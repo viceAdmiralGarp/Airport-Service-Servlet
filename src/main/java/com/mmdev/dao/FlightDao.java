@@ -41,11 +41,6 @@ public class FlightDao implements Dao<Flight> {
 		}
 		return flights;
 	}
-
-	public static FlightDao getInstance() {
-		return INSTANCE;
-	}
-
 	private Flight buildFlight(ResultSet resultSet) throws SQLException {
 		return new Flight(
 				resultSet.getLong("id"),
@@ -57,5 +52,9 @@ public class FlightDao implements Dao<Flight> {
 				resultSet.getInt("aircraft_id"),
 				resultSet.getString("status")
 		);
+	}
+
+	public static FlightDao getInstance() {
+		return INSTANCE;
 	}
 }

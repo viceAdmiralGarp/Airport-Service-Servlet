@@ -17,15 +17,11 @@ public class FlightServlet extends HttpServlet {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
 		FlightService flightService = FlightService.getInstance();
-		try (var outputStream = resp.getOutputStream()) {
-			flightService.findAll().forEach(flightDto ->
-					{
-						try {
-							outputStream.print("<h1><a href=\"ticket?flightId=" + flightDto.getId() + "\">" +
-											   flightDto.getDescription() + "</a></h1>");
-						} catch (IOException e) {
-							throw new RuntimeException(e);
-						}
+		try (var writer = resp.getWriter()) {
+			flightService.findAll().forEach(flightDto -> {
+						writer.write("<h1><a href=\"ticket?flightId="
+									 + flightDto.getId()
+									 + flightDto.getDescription() + "</a></h1>");
 					}
 			);
 		}

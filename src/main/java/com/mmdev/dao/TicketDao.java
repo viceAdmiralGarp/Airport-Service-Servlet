@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicketDao {
+
+	public static final TicketDao INSTANCE = new TicketDao();
 	private static final String FIND_ALL_TICKETS_SQL = """
    			SELECT t.id AS ticket_id,
 			passenger_no,
@@ -21,12 +23,13 @@ public class TicketDao {
 			FROM flight JOIN public.ticket t on flight.id = t.flight_id
 			""";
 
+	private TicketDao() {
+	}
 
-	public List<Ticket> findAllById() {
+	public List<Ticket> findAll() {
 		List<Ticket> tickets = new ArrayList<>();
 		try (var open = ConnectionManagerUtil.open();
 			 var prepareStatement = open.prepareStatement(FIND_ALL_TICKETS_SQL)) {
-//			prepareStatement.setLong(1, id);
 			var resultSet = prepareStatement.executeQuery();
 			while (resultSet.next()) {
 				Ticket ticket = buildTicket(resultSet);
@@ -47,5 +50,9 @@ public class TicketDao {
 				resultSet.getString("seat_no"),
 				resultSet.getLong("cost")
 		);
+	}
+
+	public static TicketDao getInstance() {
+		return INSTANCE;
 	}
 }

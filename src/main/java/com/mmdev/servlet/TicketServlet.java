@@ -17,8 +17,8 @@ public class TicketServlet extends HttpServlet {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
 		String flightId = req.getParameter("flightId");
-		TicketDao ticketDao = new TicketDao();
-		var ticketsDao = ticketDao.findAllById();
+		TicketDao ticketDao = TicketDao.getInstance();
+		var ticketsDao = ticketDao.findAll();
 		try (var outputStream = resp.getOutputStream()) {
 			for (Ticket ticket : ticketsDao) {
 				if (Long.parseLong(flightId) == ticket.getFlightId()) {

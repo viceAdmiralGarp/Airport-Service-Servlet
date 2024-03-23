@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Runner {
 	public static void main(String[] args) throws SQLException {
-		TicketDao ticketDao = new TicketDao();
-		List<Ticket> list = ticketDao.findAllById();
+		TicketDao ticketDao = TicketDao.getInstance();
+		List<Ticket> list = ticketDao.findAll();
 		list.forEach(System.out::println);
 	}
 }
