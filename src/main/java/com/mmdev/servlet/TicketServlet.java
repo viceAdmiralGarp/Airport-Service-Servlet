@@ -11,15 +11,14 @@ import java.io.IOException;
 
 @WebServlet("/ticket")
 public class TicketServlet extends HttpServlet {
+
+	private final TicketService ticketService = TicketService.getInstance();
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html");
-		resp.setCharacterEncoding("UTF-8");
-		String flightId = req.getParameter("flightId");
-		TicketService ticketService = TicketService.getInstance();
-		try (var writer = resp.getWriter()) {
-			ticketService.findAllFlightsById(Long.parseLong(flightId))
-					.forEach(ticketDto -> writer.write("<h1>" + ticketDto.getDescription() + "</h1>"));
-		}
+		String flightIdS = req.getParameter("flightId");
+		Long flightId = Long.valueOf(flightIdS);
+		req.setAttribute("tickets", ticketService.findAllFlightsById(flightId));
+		req.getRequestDispatcher("/tickets.jsp").forward(req,resp);
 	}
 }

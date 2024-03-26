@@ -12,16 +12,11 @@ import java.io.IOException;
 
 @WebServlet("/flight")
 public class FlightServlet extends HttpServlet {
+
+	private final static FlightService flightService = FlightService.getInstance();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html");
-		resp.setCharacterEncoding("UTF-8");
-		FlightService flightService = FlightService.getInstance();
-		try (var writer = resp.getWriter()) {
-			flightService.findAll().forEach(flightDto -> writer.write("<h1><a href=\"ticket?flightId="
-																	  + flightDto.getId() + "\">"
-																	  + flightDto.getDescription() + "</a></h1>")
-			);
-		}
+		req.setAttribute("flights",flightService.findAll());
+		req.getRequestDispatcher("/flights.jsp").forward(req,resp);
 	}
 }

@@ -10,7 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b1d471c-2086-4cec-88fc-8c4edf970104" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/flights.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/tickets.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/servlet/FlightServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/servlet/FlightServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/servlet/TicketServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/servlet/TicketServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +30,7 @@
         <option value="package" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Jsp File" />
       </list>
     </option>
   </component>
@@ -67,7 +74,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Tomcat Server.Tomcat 10.1.16.executor": "Debug",
+    "Tomcat Server.Tomcat 10.1.16.executor": "Run",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -75,9 +82,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2321839",
+    "project.structure.side.proportion": "0.28850102",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -221,7 +228,8 @@
       <workItem from="1711214327589" duration="7407000" />
       <workItem from="1711378768906" duration="556000" />
       <workItem from="1711439055640" duration="5855000" />
-      <workItem from="1711448690404" duration="3858000" />
+      <workItem from="1711448690404" duration="10534000" />
+      <workItem from="1711461415046" duration="4493000" />
     </task>
     <servers />
   </component>
