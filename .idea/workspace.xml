@@ -11,8 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6b1d471c-2086-4cec-88fc-8c4edf970104" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/entity/Flight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/entity/Flight.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +67,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Tomcat Server.Tomcat 10.1.16.executor": "Run",
+    "Tomcat Server.Tomcat 10.1.16.executor": "Debug",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -220,7 +218,10 @@
       <workItem from="1711051607261" duration="6945000" />
       <workItem from="1711101820855" duration="13103000" />
       <workItem from="1711131557916" duration="6532000" />
-      <workItem from="1711214327589" duration="6575000" />
+      <workItem from="1711214327589" duration="7407000" />
+      <workItem from="1711378768906" duration="556000" />
+      <workItem from="1711439055640" duration="5855000" />
+      <workItem from="1711448690404" duration="3858000" />
     </task>
     <servers />
   </component>
