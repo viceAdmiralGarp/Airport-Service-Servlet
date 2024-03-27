@@ -4,6 +4,7 @@ import com.mmdev.entity.Flight;
 import com.mmdev.exception.DaoException;
 import com.mmdev.util.ConnectionManagerUtil;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,6 +24,17 @@ public class FlightDao implements Dao<Flight> {
 							FROM flight
 			""";
 
+	private static final String SAVE_SQL = """
+							INSERT INTO flight (flight_no, 
+							departure_date, 
+							departure_airport_code, 
+							arrival_date, 
+							arrival_airport_code, 
+							aircraft_id, 
+							status) 
+							VALUES (?,?,?,?,?,?,?);
+			""";
+
 	private FlightDao() {
 	}
 
@@ -37,10 +49,43 @@ public class FlightDao implements Dao<Flight> {
 				flights.add(flight);
 			}
 		} catch (SQLException e) {
-			throw new DaoException("Error while executing SQL query (Flight)", e);
+			throw new DaoException("Error while executing SQL query (Flight findAll)", e);
 		}
 		return flights;
 	}
+
+	@Override
+	public Flight findById(Long id) {
+		return null;
+	}
+
+	@Override
+	public void create(Flight entity) {
+		try (var open = ConnectionManagerUtil.open();
+			 var prepareStatement = open.prepareStatement(SAVE_SQL)) {
+			prepareStatement.setString(1,entity.getFlightNo());
+			prepareStatement.setTimestamp(2,entity.getDepartureDate());
+			prepareStatement.setString(3,entity.getDepartureAirportCode());
+			prepareStatement.setTimestamp(4,entity.getArrivalDate());
+			prepareStatement.setString(5,entity.getArrivalAirportCode());
+			prepareStatement.setInt(6,entity.getAircraftId());
+			prepareStatement.setString(7,entity.getStatus());
+			prepareStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("Error while executing SQL query (Flight create)", e);
+		}
+	}
+
+	@Override
+	public void update(Flight entity) {
+
+	}
+
+	@Override
+	public void remove(Flight entity) {
+
+	}
+
 	private Flight buildFlight(ResultSet resultSet) throws SQLException {
 		return new Flight(
 				resultSet.getLong("id"),

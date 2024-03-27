@@ -13,7 +13,7 @@ import java.util.List;
 public class TicketDao {
 
 	public static final TicketDao INSTANCE = new TicketDao();
-	private static final String FIND_ALL_TICKETS_SQL = """
+	private static final String FIND_ALL_TICKETS_BY_ID_SQL = """
 						SELECT t.id AS ticket_id,
 			passenger_no,
 			passenger_name,
@@ -29,7 +29,7 @@ public class TicketDao {
 	public List<Ticket> findAllFlightsById(Long id) {
 		List<Ticket> tickets = new ArrayList<>();
 		try (var open = ConnectionManagerUtil.open();
-			 var prepareStatement = open.prepareStatement(FIND_ALL_TICKETS_SQL)) {
+			 var prepareStatement = open.prepareStatement(FIND_ALL_TICKETS_BY_ID_SQL)) {
 			var resultSet = prepareStatement.executeQuery();
 			while (resultSet.next()) {
 				Ticket ticket = buildTicket(resultSet);

@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
+@Builder
 public class Flight {
 	private Long id;
 	private String flightNo;
@@ -14,5 +15,5 @@ public class Flight {
 	private Timestamp arrivalDate;
 	private String arrivalAirportCode;
 	private Integer aircraftId;
-	private String Status;
+	private String status;
 }
