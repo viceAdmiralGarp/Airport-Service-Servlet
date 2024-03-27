@@ -2,6 +2,7 @@ package com.mmdev.servlet;
 
 
 import com.mmdev.serivce.FlightService;
+import com.mmdev.util.JspHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,6 +18,6 @@ public class FlightServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setAttribute("flights",flightService.findAll());
-		req.getRequestDispatcher("/flights.jsp").forward(req,resp);
+		req.getRequestDispatcher(JspHelper.Path("flights")).forward(req,resp);
 	}
 }

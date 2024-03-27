@@ -1,6 +1,7 @@
 package com.mmdev.servlet;
 
 import com.mmdev.serivce.TicketService;
+import com.mmdev.util.JspHelper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,6 +20,6 @@ public class TicketServlet extends HttpServlet {
 		String flightIdS = req.getParameter("flightId");
 		Long flightId = Long.valueOf(flightIdS);
 		req.setAttribute("tickets", ticketService.findAllFlightsById(flightId));
-		req.getRequestDispatcher("/tickets.jsp").forward(req,resp);
+		req.getRequestDispatcher(JspHelper.Path("tickets")).forward(req,resp);
 	}
 }
