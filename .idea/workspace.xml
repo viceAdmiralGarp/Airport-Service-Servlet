@@ -9,11 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6b1d471c-2086-4cec-88fc-8c4edf970104" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/servlet/RegistrationServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/registration.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="6b1d471c-2086-4cec-88fc-8c4edf970104" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -238,7 +234,7 @@
       <workItem from="1711474618551" duration="711000" />
       <workItem from="1711483358501" duration="658000" />
       <workItem from="1711547645602" duration="1989000" />
-      <workItem from="1711558241034" duration="6988000" />
+      <workItem from="1711558241034" duration="7429000" />
     </task>
     <servers />
   </component>
