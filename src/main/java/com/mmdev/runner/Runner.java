@@ -16,8 +16,18 @@ import java.util.List;
 
 public class Runner {
 	public static void main(String[] args) throws SQLException {
+		Flight flight = Flight.builder()
+				.id(10L)
+				.flightNo("6")
+				.departureDate(new Timestamp(60L))
+				.departureAirportCode("MSK")
+				.arrivalDate(new Timestamp(80L))
+				.arrivalAirportCode("LDN")
+				.aircraftId(1)
+				.status("ARRIVED")
+				.build();
 		FlightDao flightDao = FlightDao.getInstance();
-		System.out.println(flightDao.findById(9L).toString());
+		flightDao.update(flight);
 
 
 	}

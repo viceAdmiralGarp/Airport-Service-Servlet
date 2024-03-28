@@ -10,8 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b1d471c-2086-4cec-88fc-8c4edf970104" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7dd41f1f-8e4b-4166-b852-1d8f5ab2bcb0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/7dd41f1f-8e4b-4166-b852-1d8f5ab2bcb0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7dd41f1f-8e4b-4166-b852-1d8f5ab2bcb0/storage_v2/_src_/database/airport.y1zkxA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/7dd41f1f-8e4b-4166-b852-1d8f5ab2bcb0/storage_v2/_src_/database/airport.y1zkxA/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/dao/FlightDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/dao/FlightDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/runner/Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/runner/Runner.java" afterDir="false" />
@@ -246,7 +244,7 @@
       <workItem from="1711570729369" duration="978000" />
       <workItem from="1711571798773" duration="2846000" />
       <workItem from="1711574813995" duration="377000" />
-      <workItem from="1711655355328" duration="4764000" />
+      <workItem from="1711655355328" duration="6623000" />
     </task>
     <servers />
   </component>
@@ -265,15 +263,6 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/mmdev/dao/FlightDao.java</url>
-          <line>78</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="java.util.DuplicateFormatFlagsException" memberName="cause" />

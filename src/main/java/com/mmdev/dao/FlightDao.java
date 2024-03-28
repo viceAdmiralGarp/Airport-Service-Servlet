@@ -5,6 +5,7 @@ import com.mmdev.exception.DaoException;
 import com.mmdev.util.ConnectionManagerUtil;
 
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,6 +47,18 @@ public class FlightDao implements Dao<Flight> {
 							aircraft_id, 
 							status FROM flight
 							WHERE id = ?
+			""";
+
+	private static final String UPDATE_SQL = """
+				UPDATE flight 
+				SET flight_no = ?,
+				departure_date = ?,
+				departure_airport_code= ?,
+				arrival_date= ?,
+				arrival_airport_code= ?,
+				aircraft_id= ?,
+				status= ?
+				WHERE id = ?
 			""";
 
 	private FlightDao() {
@@ -103,7 +116,20 @@ public class FlightDao implements Dao<Flight> {
 
 	@Override
 	public void update(Flight entity) {
-
+		try (var open = ConnectionManagerUtil.open();
+			 var prepareStatement = open.prepareStatement(UPDATE_SQL)) {
+			prepareStatement.setString(1, entity.getFlightNo());
+			prepareStatement.setTimestamp(2, entity.getDepartureDate());
+			prepareStatement.setString(3, entity.getDepartureAirportCode());
+			prepareStatement.setTimestamp(4, entity.getArrivalDate());
+			prepareStatement.setString(5, entity.getArrivalAirportCode());
+			prepareStatement.setInt(6, entity.getAircraftId());
+			prepareStatement.setString(7, entity.getStatus());
+			prepareStatement.setLong(8, entity.getId());
+			prepareStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("Error while executing SQL query (Flight update)", e);
+		}
 	}
 
 	@Override
