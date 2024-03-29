@@ -16,8 +16,14 @@ import java.util.List;
 
 public class Runner {
 	public static void main(String[] args) throws SQLException {
+		Ticket ticket = Ticket.builder()
+				.passengerNo("123951")
+				.passengerName("Vasya")
+				.flightId(9L)
+				.seatNo("D3")
+				.cost(217L)
+				.build();
 		TicketDao ticketDao = TicketDao.getInstance();
-		var byId = ticketDao.findById(1L);
-		System.out.println(byId.toString());
+		ticketDao.create(ticket);
 	}
 }

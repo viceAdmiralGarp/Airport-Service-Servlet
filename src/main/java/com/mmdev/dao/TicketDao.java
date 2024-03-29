@@ -29,7 +29,13 @@ public class TicketDao implements Dao<Ticket> {
 			""";
 
 	private static final String FIND_BY_ID = """
-							SELECT id, passenger_no, passenger_name, flight_id, seat_no, cost FROM ticket WHERE id =?;
+				SELECT id, passenger_no, passenger_name, flight_id, seat_no, cost FROM ticket WHERE id =?;
+			""";
+
+	private static final String CREATE_SQL = """
+   				INSERT INTO ticket(passenger_no, passenger_name, flight_id, seat_no, cost) 
+   				VALUES (?,?,?,?,?);
+   				
 			""";
 
 	private TicketDao() {
@@ -87,7 +93,17 @@ public class TicketDao implements Dao<Ticket> {
 
 	@Override
 	public void create(Ticket entity) {
-
+		try (var open = ConnectionManagerUtil.open();
+			 var prepareStatement = open.prepareStatement(CREATE_SQL)) {
+			prepareStatement.setString(1,entity.getPassengerNo());
+			prepareStatement.setString(2,entity.getPassengerName());
+			prepareStatement.setLong(3,entity.getFlightId());
+			prepareStatement.setString(4,entity.getSeatNo());
+			prepareStatement.setLong(5,entity.getCost());
+			prepareStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("Error while executing SQL query (Ticket create)", e);
+		}
 	}
 
 	@Override
