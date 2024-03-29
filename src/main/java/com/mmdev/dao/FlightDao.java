@@ -5,7 +5,6 @@ import com.mmdev.exception.DaoException;
 import com.mmdev.util.ConnectionManagerUtil;
 
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,15 +49,27 @@ public class FlightDao implements Dao<Flight> {
 			""";
 
 	private static final String UPDATE_SQL = """
-				UPDATE flight 
-				SET flight_no = ?,
-				departure_date = ?,
-				departure_airport_code= ?,
-				arrival_date= ?,
-				arrival_airport_code= ?,
-				aircraft_id= ?,
-				status= ?
-				WHERE id = ?
+							UPDATE flight 
+							SET flight_no = ?,
+							departure_date = ?,
+							departure_airport_code = ?,
+							arrival_date = ?,
+							arrival_airport_code= ?,
+							aircraft_id = ?,
+							status= ?
+							WHERE id = ?;
+			""";
+
+	private static final String DELETE_SQL = """
+							DELETE FROM flight
+			       			WHERE id = ?
+			         		AND flight_no = ?
+			         		AND departure_date = ?
+			         		AND departure_airport_code = ?
+			         		AND arrival_date = ?
+			         		AND arrival_airport_code = ?
+			         		AND aircraft_id = ?
+			         		AND status = ?;		
 			""";
 
 	private FlightDao() {
@@ -134,6 +145,19 @@ public class FlightDao implements Dao<Flight> {
 
 	@Override
 	public void remove(Flight entity) {
+		try (var open = ConnectionManagerUtil.open();
+			 var prepareStatement = open.prepareStatement(UPDATE_SQL)) {
+			prepareStatement.setLong(1, entity.getId());
+			prepareStatement.setString(2, entity.getFlightNo());
+			prepareStatement.setTimestamp(3, entity.getDepartureDate());
+			prepareStatement.setString(4, entity.getDepartureAirportCode());
+			prepareStatement.setTimestamp(5, entity.getArrivalDate());
+			prepareStatement.setString(6, entity.getArrivalAirportCode());
+			prepareStatement.setInt(7, entity.getAircraftId());
+			prepareStatement.setString(8, entity.getStatus());
+		} catch (SQLException e) {
+			throw new DaoException("Error while executing SQL query (Flight remove)", e);
+		}
 
 	}
 
