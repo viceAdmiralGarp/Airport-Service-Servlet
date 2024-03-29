@@ -11,10 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6b1d471c-2086-4cec-88fc-8c4edf970104" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/dao/TicketDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/dao/TicketDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/entity/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/entity/Ticket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/runner/Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/runner/Runner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/serivce/TicketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/serivce/TicketService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/servlet/TicketServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/servlet/TicketServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +65,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Runner.executor": "Debug",
+    "Application.Runner.executor": "Run",
     "DefaultHtmlFileTemplate": "HTML File",
     "Maven.servlet-test [clean].executor": "Run",
     "Maven.servlet-test [compile].executor": "Run",
@@ -247,7 +244,7 @@
       <workItem from="1711571798773" duration="2846000" />
       <workItem from="1711574813995" duration="377000" />
       <workItem from="1711655355328" duration="6699000" />
-      <workItem from="1711704376375" duration="2165000" />
+      <workItem from="1711704376375" duration="2692000" />
     </task>
     <servers />
   </component>
@@ -266,15 +263,6 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/mmdev/runner/Runner.java</url>
-          <line>19</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="java.util.DuplicateFormatFlagsException" memberName="cause" />

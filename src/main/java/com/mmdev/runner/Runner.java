@@ -17,6 +17,7 @@ import java.util.List;
 public class Runner {
 	public static void main(String[] args) throws SQLException {
 		TicketDao ticketDao = TicketDao.getInstance();
-		ticketDao.findAll().forEach(System.out::println);
+		var byId = ticketDao.findById(1L);
+		System.out.println(byId.toString());
 	}
 }

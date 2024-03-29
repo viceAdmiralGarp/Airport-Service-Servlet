@@ -5,6 +5,7 @@ import com.mmdev.entity.Ticket;
 import com.mmdev.exception.DaoException;
 import com.mmdev.util.ConnectionManagerUtil;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,18 +14,22 @@ import java.util.List;
 public class TicketDao implements Dao<Ticket> {
 
 	private static final TicketDao INSTANCE = new TicketDao();
-	private static final String FIND_ALL_TICKETS_BY_ID_SQL = """
+	private static final String FIND_ALL_TICKETS_BY_ID_EQUAL_FLIGHT_ID_SQL = """
 				SELECT t.id AS ticket_id,
 				passenger_no,
 				passenger_name,
 				flight_id,
 				seat_no,
 				cost 
-				FROM flight JOIN public.ticket t on flight.id = t.flight_id
+				FROM flight JOIN public.ticket t on flight.id = t.flight_id;
 			""";
 
 	private static final String FIND_ALL_TICKETS = """
-				SELECT id, passenger_no, passenger_name, flight_id, seat_no, cost FROM ticket
+				SELECT id, passenger_no, passenger_name, flight_id, seat_no, cost FROM ticket;
+			""";
+
+	private static final String FIND_BY_ID = """
+							SELECT id, passenger_no, passenger_name, flight_id, seat_no, cost FROM ticket WHERE id =?;
 			""";
 
 	private TicketDao() {
@@ -33,7 +38,7 @@ public class TicketDao implements Dao<Ticket> {
 	public List<Ticket> findAllTicketsById(Long id) {
 		List<Ticket> tickets = new ArrayList<>();
 		try (var open = ConnectionManagerUtil.open();
-			 var prepareStatement = open.prepareStatement(FIND_ALL_TICKETS_BY_ID_SQL)) {
+			 var prepareStatement = open.prepareStatement(FIND_ALL_TICKETS_BY_ID_EQUAL_FLIGHT_ID_SQL)) {
 			var resultSet = prepareStatement.executeQuery();
 			while (resultSet.next()) {
 				Ticket ticket = buildTicket(resultSet);
@@ -66,7 +71,18 @@ public class TicketDao implements Dao<Ticket> {
 
 	@Override
 	public Ticket findById(Long id) {
-		return null;
+		try (var open = ConnectionManagerUtil.open();
+			 var prepareStatement = open.prepareStatement(FIND_BY_ID)) {
+			prepareStatement.setLong(1, id);
+			var resultSet = prepareStatement.executeQuery();
+			Ticket ticket = null;
+			while (resultSet.next()) {
+				ticket = buildTicket(resultSet);
+			}
+			return ticket;
+		} catch (SQLException e) {
+			throw new DaoException("Error while executing SQL query (Ticket findById)", e);
+		}
 	}
 
 	@Override
