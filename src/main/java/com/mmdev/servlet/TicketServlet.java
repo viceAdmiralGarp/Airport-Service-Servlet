@@ -19,7 +19,7 @@ public class TicketServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String flightIdS = req.getParameter("flightId");
 		Long flightId = Long.valueOf(flightIdS);
-		req.setAttribute("tickets", ticketService.findAllFlightsById(flightId));
+		req.setAttribute("tickets", ticketService.findAllTicketstsById(flightId));
 		req.getRequestDispatcher(JspHelper.Path("tickets")).forward(req,resp);
 	}
 }
