@@ -146,7 +146,7 @@ public class FlightDao implements Dao<Flight> {
 	@Override
 	public void remove(Flight entity) {
 		try (var open = ConnectionManagerUtil.open();
-			 var prepareStatement = open.prepareStatement(UPDATE_SQL)) {
+			 var prepareStatement = open.prepareStatement(DELETE_SQL)) {
 			prepareStatement.setLong(1, entity.getId());
 			prepareStatement.setString(2, entity.getFlightNo());
 			prepareStatement.setTimestamp(3, entity.getDepartureDate());
@@ -155,6 +155,7 @@ public class FlightDao implements Dao<Flight> {
 			prepareStatement.setString(6, entity.getArrivalAirportCode());
 			prepareStatement.setInt(7, entity.getAircraftId());
 			prepareStatement.setString(8, entity.getStatus());
+			prepareStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (Flight remove)", e);
 		}

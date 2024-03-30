@@ -33,10 +33,31 @@ public class TicketDao implements Dao<Ticket> {
 			""";
 
 	private static final String CREATE_SQL = """
-   				INSERT INTO ticket(passenger_no, passenger_name, flight_id, seat_no, cost) 
-   				VALUES (?,?,?,?,?);
-   				
+							INSERT INTO ticket(passenger_no, passenger_name, flight_id, seat_no, cost) 
+							VALUES (?,?,?,?,?);
+							
 			""";
+
+	private static final String UPDATE_SQL = """
+							UPDATE ticket SET 
+							passenger_no = ?, 
+							passenger_name = ?, 
+							flight_id = ?, 
+							seat_no = ?, 
+							cost = ?
+							WHERE id = ?;
+			""";
+
+	private static final String DELETE_SQL = """
+							DELETE FROM ticket 
+							WHERE id = ?
+							AND passenger_no = ?
+							AND passenger_name = ?
+							AND flight_id = ?
+							AND seat_no = ?
+							AND cost = ?
+			""";
+
 
 	private TicketDao() {
 	}
@@ -95,11 +116,12 @@ public class TicketDao implements Dao<Ticket> {
 	public void create(Ticket entity) {
 		try (var open = ConnectionManagerUtil.open();
 			 var prepareStatement = open.prepareStatement(CREATE_SQL)) {
-			prepareStatement.setString(1,entity.getPassengerNo());
-			prepareStatement.setString(2,entity.getPassengerName());
-			prepareStatement.setLong(3,entity.getFlightId());
-			prepareStatement.setString(4,entity.getSeatNo());
-			prepareStatement.setLong(5,entity.getCost());
+			prepareStatement.setString(1, entity.getPassengerNo());
+			prepareStatement.setString(2, entity.getPassengerName());
+			prepareStatement.setLong(3, entity.getFlightId());
+			prepareStatement.setString(4, entity.getSeatNo());
+			prepareStatement.setLong(5, entity.getCost());
+			prepareStatement.setLong(6, entity.getId());
 			prepareStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (Ticket create)", e);
@@ -108,12 +130,33 @@ public class TicketDao implements Dao<Ticket> {
 
 	@Override
 	public void update(Ticket entity) {
-
+		try (var open = ConnectionManagerUtil.open();
+			 var prepareStatement = open.prepareStatement(UPDATE_SQL)) {
+			prepareStatement.setString(1, entity.getPassengerNo());
+			prepareStatement.setString(2, entity.getPassengerName());
+			prepareStatement.setLong(3, entity.getFlightId());
+			prepareStatement.setString(4, entity.getSeatNo());
+			prepareStatement.setLong(5, entity.getCost());
+			prepareStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("Error while executing SQL query (Ticket update)", e);
+		}
 	}
 
 	@Override
 	public void remove(Ticket entity) {
-
+		try (var open = ConnectionManagerUtil.open();
+			 var prepareStatement = open.prepareStatement(DELETE_SQL)) {
+			prepareStatement.setLong(1, entity.getId());
+			prepareStatement.setString(2, entity.getPassengerNo());
+			prepareStatement.setString(3, entity.getPassengerName());
+			prepareStatement.setLong(4, entity.getFlightId());
+			prepareStatement.setString(5, entity.getSeatNo());
+			prepareStatement.setLong(6, entity.getCost());
+			prepareStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("Error while executing SQL query (Ticket remove)", e);
+		}
 	}
 
 	private Ticket buildTicket(ResultSet resultSet) throws SQLException {
