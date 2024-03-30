@@ -1,23 +1,26 @@
 package com.mmdev.runner;
 
 
+import com.mmdev.dao.UserDao;
 import com.mmdev.entity.Ticket;
 import com.mmdev.dao.TicketDao;
+import com.mmdev.entity.User;
 
+import java.sql.Date;
 import java.sql.SQLException;
 
 
 public class Runner {
 	public static void main(String[] args) throws SQLException {
-		Ticket ticket = Ticket.builder()
-				.id(57L)
-				.passengerNo("123951")
-				.passengerName("Vasya")
-				.flightId(9L)
-				.seatNo("D3")
-				.cost(217L)
+		User user = User.builder()
+				.name("Vasya")
+				.email("Vasya@gmail.com")
+				.password("123")
+				.birthday(new Date(2000))
+				.role("User")
+				.gender("Mail")
 				.build();
-		TicketDao ticketDao = TicketDao.getInstance();
-		ticketDao.remove(ticket);
+		UserDao userDao = UserDao.getInstance();
+		userDao.findAll().forEach(System.out::println);
 	}
 }
