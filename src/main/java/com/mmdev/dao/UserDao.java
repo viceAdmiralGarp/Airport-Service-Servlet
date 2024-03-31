@@ -39,6 +39,17 @@ public class UserDao implements Dao<User>{
    						WHERE id = ?		
 			""";
 
+	private static final String DELETE_SQL = """
+						DELETE FROM users
+						WHERE id = ?
+						AND name = ?
+   						AND email = ?
+   						AND password = ?
+   						AND birthday = ?
+   						AND role  = ?
+   						AND gender  = ?	
+			""";
+
 
 	private UserDao() {
 	}
@@ -112,7 +123,15 @@ public class UserDao implements Dao<User>{
 	@Override
 	public void remove(User entity) {
 		try (var open = ConnectionManagerUtil.open();
-			 var prepareStatement = open.prepareStatement("")) {
+			 var prepareStatement = open.prepareStatement(DELETE_SQL)) {
+			prepareStatement.setLong(1,entity.getId());
+			prepareStatement.setString(2,entity.getName());
+			prepareStatement.setString(3,entity.getEmail());
+			prepareStatement.setString(4,entity.getPassword());
+			prepareStatement.setDate(5,entity.getBirthday());
+			prepareStatement.setString(6,entity.getRole());
+			prepareStatement.setString(7,entity.getGender());
+			prepareStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (User remove)", e);
 		}

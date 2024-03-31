@@ -20,7 +20,6 @@ public class Runner {
 				.gender("Mail")
 				.build();
 		UserDao userDao = UserDao.getInstance();
-		userDao.update(user);
-		System.out.println(userDao.findById(1L).toString());
+		userDao.remove(user);
 	}
 }
