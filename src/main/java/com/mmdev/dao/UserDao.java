@@ -28,6 +28,17 @@ public class UserDao implements Dao<User>{
    						SELECT id, name, email,password,birthday,role,gender FROM users WHERE id = ?;
 			""";
 
+	private static final String UPDATE_SQL = """
+   						UPDATE users SET 
+   						name = ?, 
+   						email = ?,
+   						password = ?,
+   						birthday = ?,
+   						role  = ?,
+   						gender  = ?
+   						WHERE id = ?		
+			""";
+
 
 	private UserDao() {
 	}
@@ -84,7 +95,15 @@ public class UserDao implements Dao<User>{
 	@Override
 	public void update(User entity) {
 		try (var open = ConnectionManagerUtil.open();
-			 var prepareStatement = open.prepareStatement("")) {
+			 var prepareStatement = open.prepareStatement(UPDATE_SQL)) {
+			prepareStatement.setString(1,entity.getName());
+			prepareStatement.setString(2,entity.getEmail());
+			prepareStatement.setString(3,entity.getPassword());
+			prepareStatement.setDate(4,entity.getBirthday());
+			prepareStatement.setString(5,entity.getRole());
+			prepareStatement.setString(6,entity.getGender());
+			prepareStatement.setLong(7,entity.getId());
+			prepareStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (User update)", e);
 		}
