@@ -16,13 +16,18 @@ public class UserDao implements Dao<User>{
 	private static final UserDao INSTANCE = new UserDao();
 
 	private static final String SAVE_SQL = """
-							INSERT INTO users (name, email,password,birthday,role,gender) 
-							VALUES (?,?,?,?,?,?);
+						INSERT INTO users (name, email,password,birthday,role,gender) 
+						VALUES (?,?,?,?,?,?);
 			""";
 
 	private static final String FIND_ALL_SQL = """
    						SELECT id, name, email,password,birthday,role,gender FROM users;	
 			""";
+
+	private static final String FIND_BY_ID_SQL = """
+   						SELECT id, name, email,password,birthday,role,gender FROM users WHERE id = ?;
+			""";
+
 
 	private UserDao() {
 	}
@@ -47,11 +52,17 @@ public class UserDao implements Dao<User>{
 	@Override
 	public User findById(Long id) {
 		try (var open = ConnectionManagerUtil.open();
-			 var prepareStatement = open.prepareStatement("")) {
+			 var prepareStatement = open.prepareStatement(FIND_BY_ID_SQL)) {
+			prepareStatement.setLong(1,id);
+			var resultSet = prepareStatement.executeQuery();
+			User user = null;
+			while (resultSet.next()){
+				user = buildUser(resultSet);
+			}
+			return user;
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (User findById)", e);
 		}
-		return null;
 	}
 
 	@Override

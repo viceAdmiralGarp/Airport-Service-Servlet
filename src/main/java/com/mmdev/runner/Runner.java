@@ -21,6 +21,6 @@ public class Runner {
 				.gender("Mail")
 				.build();
 		UserDao userDao = UserDao.getInstance();
-		userDao.findAll().forEach(System.out::println);
+		System.out.println(userDao.findById(1L).toString());
 	}
 }
