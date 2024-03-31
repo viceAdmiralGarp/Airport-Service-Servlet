@@ -9,13 +9,13 @@ import static java.util.stream.Collectors.toList;
 
 public class TicketService {
 
-	public static final TicketService INSTANCE = new TicketService();
+	private static final TicketService INSTANCE = new TicketService();
 	public static TicketDao ticketDao = TicketDao.getInstance();
 
 	private TicketService() {
 	}
 
-	public List<TicketDto> findAllTicketstsById(Long id) {
+	public List<TicketDto> findAllTicketsById(Long id) {
 		return ticketDao.findAllTicketsById(id).stream()
 				.map(ticket -> new TicketDto(
 						ticket.getId(),

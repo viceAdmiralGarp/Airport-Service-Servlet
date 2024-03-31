@@ -16,14 +16,14 @@ public class SessionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		var session = req.getSession();
-		var user = (UserDto) session.getAttribute(USER);
-		if (user == null) {
-			user = UserDto.builder()
-					.id(25L)
-					.mail("test@gmail.com")
-					.build();
-			session.setAttribute(USER, user);
-		}
+//		var session = req.getSession();
+//		var user = (UserDto) session.getAttribute(USER);
+//		if (user == null) {
+//			user = UserDto.builder()
+//					.id(25L)
+//					.mail("test@gmail.com")
+//					.build();
+//			session.setAttribute(USER, user);
+//		}
 	}
 }

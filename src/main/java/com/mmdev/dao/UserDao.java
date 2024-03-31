@@ -1,5 +1,7 @@
 package com.mmdev.dao;
 
+import com.mmdev.entity.Gender;
+import com.mmdev.entity.Role;
 import com.mmdev.entity.Ticket;
 import com.mmdev.entity.User;
 import com.mmdev.exception.DaoException;
@@ -8,10 +10,11 @@ import com.mmdev.util.ConnectionManagerUtil;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDao implements Dao<User>{
+public class UserDao implements Dao<User> {
 
 	private static final UserDao INSTANCE = new UserDao();
 
@@ -21,33 +24,33 @@ public class UserDao implements Dao<User>{
 			""";
 
 	private static final String FIND_ALL_SQL = """
-   						SELECT id, name, email,password,birthday,role,gender FROM users;	
+									SELECT id, name, email,password,birthday,role,gender FROM users;	
 			""";
 
 	private static final String FIND_BY_ID_SQL = """
-   						SELECT id, name, email,password,birthday,role,gender FROM users WHERE id = ?;
+									SELECT id, name, email,password,birthday,role,gender FROM users WHERE id = ?;
 			""";
 
 	private static final String UPDATE_SQL = """
-   						UPDATE users SET 
-   						name = ?, 
-   						email = ?,
-   						password = ?,
-   						birthday = ?,
-   						role  = ?,
-   						gender  = ?
-   						WHERE id = ?		
+									UPDATE users SET 
+									name = ?, 
+									email = ?,
+									password = ?,
+									birthday = ?,
+									role  = ?,
+									gender  = ?
+									WHERE id = ?		
 			""";
 
 	private static final String DELETE_SQL = """
 						DELETE FROM users
 						WHERE id = ?
 						AND name = ?
-   						AND email = ?
-   						AND password = ?
-   						AND birthday = ?
-   						AND role  = ?
-   						AND gender  = ?	
+									AND email = ?
+									AND password = ?
+									AND birthday = ?
+									AND role  = ?
+									AND gender  = ?	
 			""";
 
 
@@ -61,7 +64,7 @@ public class UserDao implements Dao<User>{
 			 var prepareStatement = open.prepareStatement(FIND_ALL_SQL)) {
 			var resultSet = prepareStatement.executeQuery();
 			User user;
-			while (resultSet.next()){
+			while (resultSet.next()) {
 				user = buildUser(resultSet);
 				users.add(user);
 			}
@@ -75,10 +78,10 @@ public class UserDao implements Dao<User>{
 	public User findById(Long id) {
 		try (var open = ConnectionManagerUtil.open();
 			 var prepareStatement = open.prepareStatement(FIND_BY_ID_SQL)) {
-			prepareStatement.setLong(1,id);
+			prepareStatement.setLong(1, id);
 			var resultSet = prepareStatement.executeQuery();
 			User user = null;
-			while (resultSet.next()){
+			while (resultSet.next()) {
 				user = buildUser(resultSet);
 			}
 			return user;
@@ -90,13 +93,13 @@ public class UserDao implements Dao<User>{
 	@Override
 	public void create(User entity) {
 		try (var open = ConnectionManagerUtil.open();
-		var prepareStatement = open.prepareStatement(SAVE_SQL)) {
-			prepareStatement.setString(1,entity.getName());
-			prepareStatement.setString(2,entity.getEmail());
-			prepareStatement.setString(3,entity.getPassword());
-			prepareStatement.setDate(4,entity.getBirthday());
-			prepareStatement.setString(5,entity.getRole());
-			prepareStatement.setString(6,entity.getGender());
+			 var prepareStatement = open.prepareStatement(SAVE_SQL)) {
+			prepareStatement.setString(1, entity.getName());
+			prepareStatement.setString(2, entity.getEmail());
+			prepareStatement.setString(3, entity.getPassword());
+			prepareStatement.setDate(4, entity.getBirthday());
+			prepareStatement.setObject(5, entity.getRole(), Types.OTHER);
+			prepareStatement.setObject(6, entity.getGender(), Types.OTHER);
 			prepareStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (User create)", e);
@@ -107,13 +110,13 @@ public class UserDao implements Dao<User>{
 	public void update(User entity) {
 		try (var open = ConnectionManagerUtil.open();
 			 var prepareStatement = open.prepareStatement(UPDATE_SQL)) {
-			prepareStatement.setString(1,entity.getName());
-			prepareStatement.setString(2,entity.getEmail());
-			prepareStatement.setString(3,entity.getPassword());
-			prepareStatement.setDate(4,entity.getBirthday());
-			prepareStatement.setString(5,entity.getRole());
-			prepareStatement.setString(6,entity.getGender());
-			prepareStatement.setLong(7,entity.getId());
+			prepareStatement.setString(1, entity.getName());
+			prepareStatement.setString(2, entity.getEmail());
+			prepareStatement.setString(3, entity.getPassword());
+			prepareStatement.setDate(4, entity.getBirthday());
+			prepareStatement.setObject(5, entity.getRole());
+			prepareStatement.setObject(6, entity.getGender());
+			prepareStatement.setLong(7, entity.getId());
 			prepareStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (User update)", e);
@@ -124,13 +127,13 @@ public class UserDao implements Dao<User>{
 	public void remove(User entity) {
 		try (var open = ConnectionManagerUtil.open();
 			 var prepareStatement = open.prepareStatement(DELETE_SQL)) {
-			prepareStatement.setLong(1,entity.getId());
-			prepareStatement.setString(2,entity.getName());
-			prepareStatement.setString(3,entity.getEmail());
-			prepareStatement.setString(4,entity.getPassword());
-			prepareStatement.setDate(5,entity.getBirthday());
-			prepareStatement.setString(6,entity.getRole());
-			prepareStatement.setString(7,entity.getGender());
+			prepareStatement.setLong(1, entity.getId());
+			prepareStatement.setString(2, entity.getName());
+			prepareStatement.setString(3, entity.getEmail());
+			prepareStatement.setString(4, entity.getPassword());
+			prepareStatement.setDate(5, entity.getBirthday());
+			prepareStatement.setObject(6, entity.getRole());
+			prepareStatement.setObject(7, entity.getGender());
 			prepareStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (User remove)", e);
@@ -144,12 +147,12 @@ public class UserDao implements Dao<User>{
 				.email(resultSet.getString("email"))
 				.password(resultSet.getString("password"))
 				.birthday(resultSet.getDate("birthday"))
-				.role(resultSet.getString("role"))
-				.gender(resultSet.getString("gender"))
+				.role((Role) resultSet.getObject("role"))
+				.gender((Gender) resultSet.getObject("gender"))
 				.build();
 	}
 
-	public static UserDao getInstance(){
+	public static UserDao getInstance() {
 		return INSTANCE;
 	}
 
