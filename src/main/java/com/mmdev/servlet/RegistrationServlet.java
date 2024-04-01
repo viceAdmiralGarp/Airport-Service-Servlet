@@ -17,6 +17,7 @@ import java.util.List;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
+	private final UserService userService = UserService.getInstance();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setAttribute("roles", List.of(Role.USER,Role.ADMIN));
@@ -37,7 +38,7 @@ public class RegistrationServlet extends HttpServlet {
 				.role(req.getParameter("role"))
 				.gender(req.getParameter("gender"))
 				.build();
-		UserService userService = UserService.getInstance();
 		userService.create(userDto);
+		resp.sendRedirect("/login");
 	}
 }

@@ -7,12 +7,11 @@ import com.mmdev.entity.User;
 import com.mmdev.exception.DaoException;
 import com.mmdev.util.ConnectionManagerUtil;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class UserDao implements Dao<User> {
 
@@ -90,10 +89,11 @@ public class UserDao implements Dao<User> {
 		}
 	}
 
+
 	@Override
 	public void create(User entity) {
 		try (var open = ConnectionManagerUtil.open();
-			 var prepareStatement = open.prepareStatement(SAVE_SQL)) {
+			 var prepareStatement = open.prepareStatement(SAVE_SQL)) { //RETURN_GENERATED_KEYS
 			prepareStatement.setString(1, entity.getName());
 			prepareStatement.setString(2, entity.getEmail());
 			prepareStatement.setString(3, entity.getPassword());
@@ -101,6 +101,10 @@ public class UserDao implements Dao<User> {
 			prepareStatement.setObject(5, entity.getRole(), Types.OTHER);
 			prepareStatement.setObject(6, entity.getGender(), Types.OTHER);
 			prepareStatement.executeUpdate();
+//			var generatedKeys = prepareStatement.getGeneratedKeys();
+//			generatedKeys.next();
+//			entity.setId(generatedKeys.getObject("id",Long.class));
+//			return entity;
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (User create)", e);
 		}
