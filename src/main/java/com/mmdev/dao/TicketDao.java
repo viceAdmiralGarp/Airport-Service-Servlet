@@ -5,11 +5,12 @@ import com.mmdev.entity.Ticket;
 import com.mmdev.exception.DaoException;
 import com.mmdev.util.ConnectionManagerUtil;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class TicketDao implements Dao<Ticket> {
 
@@ -113,9 +114,9 @@ public class TicketDao implements Dao<Ticket> {
 	}
 
 	@Override
-	public void create(Ticket entity) {
+	public Ticket create(Ticket entity) {
 		try (var open = ConnectionManagerUtil.open();
-			 var prepareStatement = open.prepareStatement(CREATE_SQL)) {
+			 var prepareStatement = open.prepareStatement(CREATE_SQL,RETURN_GENERATED_KEYS)) {
 			prepareStatement.setString(1, entity.getPassengerNo());
 			prepareStatement.setString(2, entity.getPassengerName());
 			prepareStatement.setLong(3, entity.getFlightId());
@@ -123,6 +124,10 @@ public class TicketDao implements Dao<Ticket> {
 			prepareStatement.setLong(5, entity.getCost());
 			prepareStatement.setLong(6, entity.getId());
 			prepareStatement.executeUpdate();
+			var generatedKeys = prepareStatement.getGeneratedKeys();
+			generatedKeys.next();
+			entity.setId(generatedKeys.getObject("id",Long.class));
+			return entity;
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (Ticket create)", e);
 		}

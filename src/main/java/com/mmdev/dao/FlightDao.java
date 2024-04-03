@@ -7,8 +7,11 @@ import com.mmdev.util.ConnectionManagerUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 
 public class FlightDao implements Dao<Flight> {
@@ -109,9 +112,9 @@ public class FlightDao implements Dao<Flight> {
 	}
 
 	@Override
-	public void create(Flight entity) {
+	public Flight create(Flight entity) {
 		try (var open = ConnectionManagerUtil.open();
-			 var prepareStatement = open.prepareStatement(SAVE_SQL)) {
+			 var prepareStatement = open.prepareStatement(SAVE_SQL, RETURN_GENERATED_KEYS)) {
 			prepareStatement.setString(1, entity.getFlightNo());
 			prepareStatement.setTimestamp(2, entity.getDepartureDate());
 			prepareStatement.setString(3, entity.getDepartureAirportCode());
@@ -120,6 +123,10 @@ public class FlightDao implements Dao<Flight> {
 			prepareStatement.setInt(6, entity.getAircraftId());
 			prepareStatement.setString(7, entity.getStatus());
 			prepareStatement.executeUpdate();
+			var generatedKeys = prepareStatement.getGeneratedKeys();
+			generatedKeys.next();
+			entity.setId(generatedKeys.getObject("id",Long.class));
+			return entity;
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (Flight create)", e);
 		}

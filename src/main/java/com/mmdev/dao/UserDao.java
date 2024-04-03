@@ -6,6 +6,7 @@ import com.mmdev.entity.Ticket;
 import com.mmdev.entity.User;
 import com.mmdev.exception.DaoException;
 import com.mmdev.util.ConnectionManagerUtil;
+import lombok.SneakyThrows;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -42,14 +43,14 @@ public class UserDao implements Dao<User> {
 			""";
 
 	private static final String DELETE_SQL = """
-						DELETE FROM users
-						WHERE id = ?
-						AND name = ?
-									AND email = ?
-									AND password = ?
-									AND birthday = ?
-									AND role  = ?
-									AND gender  = ?	
+								DELETE FROM users
+								WHERE id = ?
+								AND name = ?
+								AND email = ?
+								AND password = ?
+								AND birthday = ?
+								AND role  = ?
+								AND gender  = ?	
 			""";
 
 
@@ -91,9 +92,10 @@ public class UserDao implements Dao<User> {
 
 
 	@Override
-	public void create(User entity) {
+	@SneakyThrows
+	public User create(User entity) {
 		try (var open = ConnectionManagerUtil.open();
-			 var prepareStatement = open.prepareStatement(SAVE_SQL)) { //RETURN_GENERATED_KEYS
+			 var prepareStatement = open.prepareStatement(SAVE_SQL,RETURN_GENERATED_KEYS)) {
 			prepareStatement.setString(1, entity.getName());
 			prepareStatement.setString(2, entity.getEmail());
 			prepareStatement.setString(3, entity.getPassword());
@@ -101,12 +103,10 @@ public class UserDao implements Dao<User> {
 			prepareStatement.setObject(5, entity.getRole(), Types.OTHER);
 			prepareStatement.setObject(6, entity.getGender(), Types.OTHER);
 			prepareStatement.executeUpdate();
-//			var generatedKeys = prepareStatement.getGeneratedKeys();
-//			generatedKeys.next();
-//			entity.setId(generatedKeys.getObject("id",Long.class));
-//			return entity;
-		} catch (SQLException e) {
-			throw new DaoException("Error while executing SQL query (User create)", e);
+			var generatedKeys = prepareStatement.getGeneratedKeys();
+			generatedKeys.next();
+			entity.setId(generatedKeys.getObject("id",Long.class));
+			return entity;
 		}
 	}
 
