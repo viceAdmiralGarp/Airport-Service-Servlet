@@ -3,7 +3,6 @@ package com.mmdev.validator;
 
 import com.mmdev.dto.UserDto;
 import com.mmdev.entity.Gender;
-import com.mmdev.entity.Role;
 
 
 public class UserValidator implements Validator<UserDto> {
@@ -17,20 +16,20 @@ public class UserValidator implements Validator<UserDto> {
 	@Override
 	public ValidationResult isValid(UserDto userDto) {
 		var validationResult = new ValidationResult();
-		if (userDto.getName() == EMPTY_FIELD) {
-			validationResult.add(Error.of("invalid.Name", "Name is invalid"));
+		if (userDto.getName().equals(EMPTY_FIELD)) {
+			validationResult.add(Error.of("invalid.Name", "field cannot be empty, please enter Name"));
 		}
-		if (userDto.getEmail() == EMPTY_FIELD) {
-			validationResult.add(Error.of("invalid.Email", "Email is invalid"));
+		if (userDto.getEmail().equals(EMPTY_FIELD)) {
+			validationResult.add(Error.of("invalid.Email", "field cannot be empty, please enter Email"));
 		}
-		if (userDto.getPassword() == EMPTY_FIELD) {
-			validationResult.add(Error.of("invalid.Password", "Password is invalid"));
+		if (userDto.getPassword().equals(EMPTY_FIELD)) {
+			validationResult.add(Error.of("invalid.Password", "field cannot be empty, please enter Password"));
 		}
-		if (userDto.getBirthday() == EMPTY_FIELD) {
-			validationResult.add(Error.of("invalid.Birthday", "Birthday is invalid"));
+		if (userDto.getBirthday().equals(EMPTY_FIELD)) {
+			validationResult.add(Error.of("invalid.Birthday", "field cannot be empty, please enter Birthday"));
 		}
 		if (userDto.getGender() == null || Gender.valueOf(userDto.getGender()) == null) {
-			validationResult.add(Error.of("invalid.Gender", "Gender is invalid"));
+			validationResult.add(Error.of("invalid.Gender", "field cannot be empty, please enter Gender"));
 		}
 		return validationResult;
 	}
