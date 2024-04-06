@@ -21,7 +21,7 @@ public class Runner {
 				.role(Role.USER)
 				.gender(Gender.MALE)
 				.build();
-		UserDao userDao = UserDao.getInstance();
+		UserDao userDao = UserDao.getInstance();//TODO why are you using dao directly instead of using service?
 		userDao.create(user);
 
 	}

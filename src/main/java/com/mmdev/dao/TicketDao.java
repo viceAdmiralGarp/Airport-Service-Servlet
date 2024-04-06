@@ -69,7 +69,7 @@ public class TicketDao implements Dao<Ticket> {
 			 var prepareStatement = open.prepareStatement(FIND_ALL_TICKETS_BY_ID_EQUAL_FLIGHT_ID_SQL)) {
 			var resultSet = prepareStatement.executeQuery();
 			while (resultSet.next()) {
-				Ticket ticket = buildTicket(resultSet);
+				Ticket ticket = buildTicket(resultSet);//TODO: eto wache pizda drug, indexed columns in database works more faster then just iterating through all entities, add WHERE clause to your query and retrieve only one entity
 				if (id.equals(ticket.getFlightId())) {
 					tickets.add(ticket);
 				}
@@ -125,9 +125,9 @@ public class TicketDao implements Dao<Ticket> {
 			prepareStatement.setLong(6, entity.getId());
 			prepareStatement.executeUpdate();
 			var generatedKeys = prepareStatement.getGeneratedKeys();
-			generatedKeys.next();
+			generatedKeys.next();//TODO why do you need this line?
 			entity.setId(generatedKeys.getObject("id",Long.class));
-			return entity;
+			return entity;//TODO why are you returning the whole entity but service class returning only id
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (Ticket create)", e);
 		}

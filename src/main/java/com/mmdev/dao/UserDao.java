@@ -92,7 +92,7 @@ public class UserDao implements Dao<User> {
 
 
 	@Override
-	@SneakyThrows
+	@SneakyThrows//TODO why do you need this annotation here?
 	public User create(User entity) {
 		try (var open = ConnectionManagerUtil.open();
 			 var prepareStatement = open.prepareStatement(SAVE_SQL,RETURN_GENERATED_KEYS)) {

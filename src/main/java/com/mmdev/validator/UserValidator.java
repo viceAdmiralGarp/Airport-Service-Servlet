@@ -8,7 +8,7 @@ import com.mmdev.entity.Gender;
 public class UserValidator implements Validator<UserDto> {
 
 	private final static UserValidator INSTANCE = new UserValidator();
-	private final String EMPTY_FIELD = "";
+	private final String EMPTY_FIELD = "";//TODO can be converted to local variable
 
 	private UserValidator() {
 	}
@@ -28,7 +28,7 @@ public class UserValidator implements Validator<UserDto> {
 		if (userDto.getBirthday().equals(EMPTY_FIELD)) {
 			validationResult.add(Error.of("invalid.Birthday", "field cannot be empty, please enter Birthday"));
 		}
-		if (userDto.getGender() == null || Gender.valueOf(userDto.getGender()) == null) {
+		if (userDto.getGender() == null || Gender.valueOf(userDto.getGender()) == null) {//TODO: Condition 'Gender.valueOf(userDto.getGender()) == null' is always 'false' when reached
 			validationResult.add(Error.of("invalid.Gender", "field cannot be empty, please enter Gender"));
 		}
 		return validationResult;

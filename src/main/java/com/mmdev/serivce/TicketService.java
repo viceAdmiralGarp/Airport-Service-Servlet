@@ -7,7 +7,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public class TicketService {
+public class TicketService {// TODO: why service doesnt have all methods from dao?
 
 	private static final TicketService INSTANCE = new TicketService();
 	public static TicketDao ticketDao = TicketDao.getInstance();

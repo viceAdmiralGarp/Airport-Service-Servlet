@@ -7,7 +7,7 @@ import com.mmdev.entity.User;
 
 import java.sql.Date;
 
-public class UserMapper implements Mapper<UserDto, User> {
+public class UserMapper implements Mapper<UserDto, User> {//TODO: map(UserDto userDto) usually placed inside the DTO class with name "toUser()"
 
 	private static final UserMapper INSTANCE = new UserMapper();
 
@@ -28,6 +28,6 @@ public class UserMapper implements Mapper<UserDto, User> {
 
 	public static UserMapper getInstance() {
 		return INSTANCE;
-	}
+	}//TODO: all getInstance() methods should be on the top of the class
 
 }

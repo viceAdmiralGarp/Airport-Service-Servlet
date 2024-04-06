@@ -82,14 +82,14 @@ public class FlightDao implements Dao<Flight> {
 	public List<Flight> findAll() {
 		List<Flight> flights = new ArrayList<>();
 		try (var open = ConnectionManagerUtil.open()) {
-			var preparedStatement = open.prepareStatement(FIND_ALL_SQL);
+			var preparedStatement = open.prepareStatement(FIND_ALL_SQL);//TODO why are you using PreparedStatement here? There is no parameters
 			var resultSet = preparedStatement.executeQuery();
 			Flight flight;
 			while (resultSet.next()) {
 				flight = buildFlight(resultSet);
-				flights.add(flight);
+				flights.add(flight);//do you really need flight variable here, why not just add buildFlight(resultSet) to the list? - flights.add(buildFlight(resultSet))
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e) {//TODO: enhancement: add logger
 			throw new DaoException("Error while executing SQL query (Flight findAll)", e);
 		}
 		return flights;
@@ -132,11 +132,11 @@ public class FlightDao implements Dao<Flight> {
 		}
 	}
 
-	@Override
-	public void update(Flight entity) {
+	@Override//TODO: add transaction support for all(not find) DAO methods
+	public void update(Flight entity) {//TODO all DAO method should take DTO as a argument not entity
 		try (var open = ConnectionManagerUtil.open();
 			 var prepareStatement = open.prepareStatement(UPDATE_SQL)) {
-			prepareStatement.setString(1, entity.getFlightNo());
+			prepareStatement.setString(1, entity.getFlightNo());//TODO: you can extract populating of the prepareStatement to a separate method
 			prepareStatement.setTimestamp(2, entity.getDepartureDate());
 			prepareStatement.setString(3, entity.getDepartureAirportCode());
 			prepareStatement.setTimestamp(4, entity.getArrivalDate());
@@ -151,7 +151,7 @@ public class FlightDao implements Dao<Flight> {
 	}
 
 	@Override
-	public void remove(Flight entity) {
+	public void remove(Flight entity) {//TODO usually delete method deleting by id and not by whole entity
 		try (var open = ConnectionManagerUtil.open();
 			 var prepareStatement = open.prepareStatement(DELETE_SQL)) {
 			prepareStatement.setLong(1, entity.getId());

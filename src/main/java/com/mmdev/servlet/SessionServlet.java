@@ -16,7 +16,7 @@ public class SessionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		var session = req.getSession();
+//		var session = req.getSession();//TODO commented code should be removed
 //		var user = (UserDto) session.getAttribute(USER);
 //		if (user == null) {
 //			user = UserDto.builder()

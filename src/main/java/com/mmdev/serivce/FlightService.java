@@ -24,7 +24,7 @@ public class FlightService {
 						""".formatted(
 								flight.getDepartureAirportCode(),
 								flight.getArrivalAirportCode(),
-								flight.getStatus())))
+								flight.getStatus())))//TODO: extract .formatted to a separate method
 						.collect(toList());
 	}
 

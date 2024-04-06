@@ -18,12 +18,12 @@ public class CookieServlet extends HttpServlet {
 	private final AtomicInteger siteVisit = new AtomicInteger();
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {//TODO ServletException is not needed
 		var cookies = req.getCookies();
 		if (cookies == null || Arrays.stream(cookies)
 				.filter(cookie -> UNIQUE_ID.equals(cookie.getName()))
 				.findFirst()
-				.isEmpty()) {
+				.isEmpty()) {//TODO Arrays.stream(cookies).noneMatch(cookie -> UNIQUE_ID.equals(cookie.getName())) is more readable and extract that to a separate method
 			var cookie = new Cookie(UNIQUE_ID, "1");
 			resp.addCookie(cookie);
 			siteVisit.incrementAndGet();

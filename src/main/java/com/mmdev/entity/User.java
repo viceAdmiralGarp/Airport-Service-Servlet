@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
-@Data
+@Data//TODO @Data is not recommended for entities
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

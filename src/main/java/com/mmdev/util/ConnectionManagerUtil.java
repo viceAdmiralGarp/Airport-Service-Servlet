@@ -5,9 +5,9 @@ import lombok.experimental.UtilityClass;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.SQLException; //TODO: unused import
 
-@UtilityClass
+@UtilityClass//TODO: Why are you using experimental feature?
 public class ConnectionManagerUtil {
 
 	private static final String PASSWORD_KEY = "db.password";
@@ -26,7 +26,7 @@ public class ConnectionManagerUtil {
 		}
 	}
 
-	@SneakyThrows
+	@SneakyThrows//TODO: using SneakyThrows is not recommended
 	public static Connection open() {
 		return DriverManager.getConnection(PropertiesUtil.get(URL),
 				PropertiesUtil.get(USERNAME_KEY),
