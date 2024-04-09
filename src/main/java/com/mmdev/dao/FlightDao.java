@@ -81,13 +81,11 @@ public class FlightDao implements Dao<Flight> {
 	@Override
 	public List<Flight> findAll() {
 		List<Flight> flights = new ArrayList<>();
-		try (var open = ConnectionManagerUtil.open()) {
-			var preparedStatement = open.prepareStatement(FIND_ALL_SQL);
+		try (var open = ConnectionManagerUtil.open();
+			 var preparedStatement = open.prepareStatement(FIND_ALL_SQL)) {
 			var resultSet = preparedStatement.executeQuery();
-			Flight flight;
 			while (resultSet.next()) {
-				flight = buildFlight(resultSet);
-				flights.add(flight);
+				flights.add(buildFlight(resultSet));
 			}
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (Flight findAll)", e);

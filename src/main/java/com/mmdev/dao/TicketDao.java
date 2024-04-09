@@ -16,13 +16,13 @@ public class TicketDao implements Dao<Ticket> {
 
 	private static final TicketDao INSTANCE = new TicketDao();
 	private static final String FIND_ALL_TICKETS_BY_ID_EQUAL_FLIGHT_ID_SQL = """
-				SELECT t.id AS ticket_id,
+				SELECT id, 
 				passenger_no,
 				passenger_name,
 				flight_id,
 				seat_no,
 				cost 
-				FROM flight JOIN public.ticket t on flight.id = t.flight_id;
+				FROM ticket WHERE flight_id = ?
 			""";
 
 	private static final String FIND_ALL_TICKETS = """
@@ -34,29 +34,29 @@ public class TicketDao implements Dao<Ticket> {
 			""";
 
 	private static final String CREATE_SQL = """
-							INSERT INTO ticket(passenger_no, passenger_name, flight_id, seat_no, cost) 
-							VALUES (?,?,?,?,?);
+				INSERT INTO ticket(passenger_no, passenger_name, flight_id, seat_no, cost) 
+				VALUES (?,?,?,?,?);
 							
 			""";
 
 	private static final String UPDATE_SQL = """
-							UPDATE ticket SET 
-							passenger_no = ?, 
-							passenger_name = ?, 
-							flight_id = ?, 
-							seat_no = ?, 
-							cost = ?
-							WHERE id = ?;
+				UPDATE ticket SET 
+				passenger_no = ?, 
+				passenger_name = ?, 
+				flight_id = ?, 
+				seat_no = ?, 
+				cost = ?
+				WHERE id = ?;
 			""";
 
 	private static final String DELETE_SQL = """
-							DELETE FROM ticket 
-							WHERE id = ?
-							AND passenger_no = ?
-							AND passenger_name = ?
-							AND flight_id = ?
-							AND seat_no = ?
-							AND cost = ?
+				DELETE FROM ticket 
+				WHERE id = ?
+				AND passenger_no = ?
+				AND passenger_name = ?
+				AND flight_id = ?
+				AND seat_no = ?
+				AND cost = ?
 			""";
 
 
@@ -67,12 +67,10 @@ public class TicketDao implements Dao<Ticket> {
 		List<Ticket> tickets = new ArrayList<>();
 		try (var open = ConnectionManagerUtil.open();
 			 var prepareStatement = open.prepareStatement(FIND_ALL_TICKETS_BY_ID_EQUAL_FLIGHT_ID_SQL)) {
+			prepareStatement.setLong(1, id);
 			var resultSet = prepareStatement.executeQuery();
 			while (resultSet.next()) {
-				Ticket ticket = buildTicket(resultSet);
-				if (id.equals(ticket.getFlightId())) {
-					tickets.add(ticket);
-				}
+				tickets.add(buildTicket(resultSet));
 			}
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (Ticket findAllTicketsById)", e);
@@ -116,7 +114,7 @@ public class TicketDao implements Dao<Ticket> {
 	@Override
 	public Ticket create(Ticket entity) {
 		try (var open = ConnectionManagerUtil.open();
-			 var prepareStatement = open.prepareStatement(CREATE_SQL,RETURN_GENERATED_KEYS)) {
+			 var prepareStatement = open.prepareStatement(CREATE_SQL, RETURN_GENERATED_KEYS)) {
 			prepareStatement.setString(1, entity.getPassengerNo());
 			prepareStatement.setString(2, entity.getPassengerName());
 			prepareStatement.setLong(3, entity.getFlightId());
@@ -125,9 +123,9 @@ public class TicketDao implements Dao<Ticket> {
 			prepareStatement.setLong(6, entity.getId());
 			prepareStatement.executeUpdate();
 			var generatedKeys = prepareStatement.getGeneratedKeys();
-			generatedKeys.next();
-			entity.setId(generatedKeys.getObject("id",Long.class));
-			return entity;
+			generatedKeys.next();//TODO why do you need this line?
+			entity.setId(generatedKeys.getObject("id", Long.class));
+			return entity;//TODO why are you returning the whole entity but service class returning only id
 		} catch (SQLException e) {
 			throw new DaoException("Error while executing SQL query (Ticket create)", e);
 		}

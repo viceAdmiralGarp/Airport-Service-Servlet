@@ -18,7 +18,7 @@ public class CookieServlet extends HttpServlet {
 	private final AtomicInteger siteVisit = new AtomicInteger();
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		var cookies = req.getCookies();
 		if (cookies == null || Arrays.stream(cookies)
 				.filter(cookie -> UNIQUE_ID.equals(cookie.getName()))

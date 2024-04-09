@@ -20,8 +20,8 @@ public class TicketService {
 				.map(ticket -> new TicketDto(
 						ticket.getId(),
 						"""
-									%s - %s - %s
-								""".formatted(ticket.getId(), ticket.getFlightId(), ticket.getPassengerNo())))
+						%s - %s - %s
+						""".formatted(ticket.getId(), ticket.getFlightId(), ticket.getPassengerNo())))
 				.collect(toList());
 	}
 
