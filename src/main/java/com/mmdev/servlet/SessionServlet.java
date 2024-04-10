@@ -1,6 +1,5 @@
 package com.mmdev.servlet;
 
-import com.mmdev.dto.UserDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

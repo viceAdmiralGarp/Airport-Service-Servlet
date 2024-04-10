@@ -10,18 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6b1d471c-2086-4cec-88fc-8c4edf970104" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7dd41f1f-8e4b-4166-b852-1d8f5ab2bcb0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/7dd41f1f-8e4b-4166-b852-1d8f5ab2bcb0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7dd41f1f-8e4b-4166-b852-1d8f5ab2bcb0/storage_v2/_src_/database/airport.y1zkxA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/7dd41f1f-8e4b-4166-b852-1d8f5ab2bcb0/storage_v2/_src_/database/airport.y1zkxA/schema/public.abK9xQ.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/servlet/LoginServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/login.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/dao/FlightDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/dao/FlightDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/dao/TicketDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/dao/TicketDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/serivce/TicketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/serivce/TicketService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/servlet/CookieServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/servlet/CookieServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/servlet/SessionServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/servlet/SessionServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/util/ConnectionManagerUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/util/ConnectionManagerUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mmdev/validator/UserValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mmdev/validator/UserValidator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,9 +25,9 @@
       <list>
         <option value="HTML File" />
         <option value="package" />
-        <option value="Jsp File" />
         <option value="Enum" />
         <option value="Interface" />
+        <option value="Jsp File" />
         <option value="Class" />
       </list>
     </option>
@@ -277,7 +269,8 @@
       <workItem from="1712174724656" duration="1253000" />
       <workItem from="1712255719359" duration="1987000" />
       <workItem from="1712658813851" duration="1121000" />
-      <workItem from="1712668067499" duration="567000" />
+      <workItem from="1712668067499" duration="1357000" />
+      <workItem from="1712770307915" duration="941000" />
     </task>
     <servers />
   </component>
